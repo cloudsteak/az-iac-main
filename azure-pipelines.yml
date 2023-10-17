@@ -17,6 +17,11 @@ steps:
     terraform plan -out=tfplan
   displayName: 'Terraform Init and Plan'
   workingDirectory: $(System.DefaultWorkingDirectory)/terraform
+  env:
+    ARM_CLIENT_ID: $(AZ_CLIENT_ID)
+    ARM_CLIENT_SECRET: $(AZ_CLIENT_SECRET)
+    ARM_SUBSCRIPTION_ID: $(AZ_SUBSCRIPRION_ID)
+    ARM_TENANT_ID: $(AZ_TENANT_ID)
 
 - script: |
     terraform apply -input=false tfplan
