@@ -1,0 +1,27 @@
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '3.x'
+    addToPath: true
+
+- script: |
+    terraform init
+    terraform plan -out=tfplan
+  displayName: 'Terraform Init and Plan'
+  workingDirectory: $(System.DefaultWorkingDirectory)/path/to/terraform/code
+
+- script: |
+    terraform apply -input=false tfplan
+  displayName: 'Terraform Apply'
+  workingDirectory: $(System.DefaultWorkingDirectory)/path/to/terraform/code
+  env:
+    ARM_CLIENT_ID: $(serviceConnectionClientId)
+    ARM_CLIENT_SECRET: $(serviceConnectionClientSecret)
+    ARM_SUBSCRIPTION_ID: $(serviceConnectionSubscriptionId)
+    ARM_TENANT_ID: $(serviceConnectionTenantId)
