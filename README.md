@@ -1,2 +1,2 @@
-# az-iac-main
-IaC on Azure basis
+# IaC on all Cloud basis
+IaC on all Cloud basis
