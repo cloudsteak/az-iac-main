@@ -22,6 +22,6 @@ terraform {
 }
 
 resource "azurerm_resource_group" "group1" {
-  name     = "cloudsteak-iac"
+  name     = "finall-iac"
   location = "North Europe"
 }
