@@ -23,10 +23,10 @@ terraform {
 
 resource "azurerm_resource_group" "finall-iac" {
   name     = "finall-iac"
-  location = "North Europe"
+  location = "Poland Central"
 }
 
 resource "azurerm_resource_group" "finall-vm" {
   name     = "finall-vm"
-  location = "North Europe"
+  location = "Poland Central"
 }
