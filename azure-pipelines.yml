@@ -21,7 +21,7 @@ steps:
   displayName: 'Terraform Apply'
   workingDirectory: $(System.DefaultWorkingDirectory)/path/to/terraform/code
   env:
-    ARM_CLIENT_ID: $(serviceConnectionClientId)
-    ARM_CLIENT_SECRET: $(serviceConnectionClientSecret)
-    ARM_SUBSCRIPTION_ID: $(SUBSCRIPRION_ID)
-    ARM_TENANT_ID: $(serviceConnectionTenantId)
+    ARM_CLIENT_ID: $(AZ_CLIENT_ID)
+    ARM_CLIENT_SECRET: $(AZ_CLIENT_SECRET)
+    ARM_SUBSCRIPTION_ID: $(AZ_SUBSCRIPRION_ID)
+    ARM_TENANT_ID: $(AZ_TENANT_ID)
