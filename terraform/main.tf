@@ -28,5 +28,5 @@ resource "azurerm_resource_group" "finall-iac" {
 
 resource "azurerm_resource_group" "finall-vm" {
   name     = "finall-vm"
-  location = "West Europe"
+  location = "North Europe"
 }
