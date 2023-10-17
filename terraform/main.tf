@@ -12,6 +12,15 @@ provider "azurerm" {
   features {}
 }
 
+terraform {
+  backend "azurerm" {
+    resource_group_name   = "finall-iac-shared"
+    storage_account_name  = "safinallterraform"
+    container_name        = "finall-iac-state"
+    key                   = "finall-iac-state-file.tfstate"
+  }
+}
+
 resource "azurerm_resource_group" "group1" {
   name     = "cloudsteak-iac"
   location = "North Europe"
