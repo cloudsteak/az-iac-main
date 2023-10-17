@@ -14,5 +14,5 @@ provider "azurerm" {
 
 resource "azurerm_resource_group" "group1" {
   name     = "cloudsteak-iac"
-  location = "West Europe"
+  location = "North Europe"
 }
