@@ -21,7 +21,12 @@ terraform {
   }
 }
 
-resource "azurerm_resource_group" "group1" {
+resource "azurerm_resource_group" "finall-iac" {
   name     = "finall-iac"
   location = "North Europe"
+}
+
+resource "azurerm_resource_group" "finall-vm" {
+  name     = "finall-vm"
+  location = "West Europe"
 }
