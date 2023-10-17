@@ -23,5 +23,5 @@ steps:
   env:
     ARM_CLIENT_ID: $(serviceConnectionClientId)
     ARM_CLIENT_SECRET: $(serviceConnectionClientSecret)
-    ARM_SUBSCRIPTION_ID: $(serviceConnectionSubscriptionId)
+    ARM_SUBSCRIPTION_ID: $(SUBSCRIPRION_ID)
     ARM_TENANT_ID: $(serviceConnectionTenantId)
