@@ -11,15 +11,17 @@ steps:
     addToPath: true
 
 - script: |
+    pwd
+    ls -la
     terraform init
     terraform plan -out=tfplan
   displayName: 'Terraform Init and Plan'
-  workingDirectory: $(System.DefaultWorkingDirectory)/path/to/terraform/code
+  workingDirectory: $(System.DefaultWorkingDirectory)/terraform
 
 - script: |
     terraform apply -input=false tfplan
   displayName: 'Terraform Apply'
-  workingDirectory: $(System.DefaultWorkingDirectory)/path/to/terraform/code
+  workingDirectory: $(System.DefaultWorkingDirectory)/terraform
   env:
     ARM_CLIENT_ID: $(AZ_CLIENT_ID)
     ARM_CLIENT_SECRET: $(AZ_CLIENT_SECRET)
