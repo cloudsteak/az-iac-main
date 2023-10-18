@@ -18,7 +18,7 @@ stages:
           - task: Bash@3
             name: azure_terrform_init
             displayName: "Terraform Init and Plan"
-            condition: and(eq(variables['Build.reason'], 'PullRequest'), eq(variables['Build.reason'], 'IndividualCI'))
+            condition: or(eq(variables['Build.reason'], 'PullRequest'), eq(variables['Build.reason'], 'IndividualCI'))
             env:
               ARM_CLIENT_ID: $(AZ_CLIENT_ID)
               ARM_CLIENT_SECRET: $(AZ_CLIENT_SECRET)
