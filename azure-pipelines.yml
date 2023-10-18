@@ -1,34 +1,46 @@
 trigger:
-- main
+  - main
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: "ubuntu-latest"
 
-steps:
-- task: UsePythonVersion@0
-  inputs:
-    versionSpec: '3.x'
-    addToPath: true
-
-- script: |
-    pwd
-    ls -la
-    terraform init
-    terraform plan -out=tfplan
-  displayName: 'Terraform Init and Plan'
-  workingDirectory: $(System.DefaultWorkingDirectory)/azure/environments/prod
-  env:
-    ARM_CLIENT_ID: $(AZ_CLIENT_ID)
-    ARM_CLIENT_SECRET: $(AZ_CLIENT_SECRET)
-    ARM_SUBSCRIPTION_ID: $(AZ_SUBSCRIPRION_ID)
-    ARM_TENANT_ID: $(AZ_TENANT_ID)
-
-- script: |
-    terraform apply -input=false tfplan
-  displayName: 'Terraform Apply'
-  workingDirectory: $(System.DefaultWorkingDirectory)/azure/environments/prod
-  env:
-    ARM_CLIENT_ID: $(AZ_CLIENT_ID)
-    ARM_CLIENT_SECRET: $(AZ_CLIENT_SECRET)
-    ARM_SUBSCRIPTION_ID: $(AZ_SUBSCRIPRION_ID)
-    ARM_TENANT_ID: $(AZ_TENANT_ID)
+stages:
+  - stage: azure_iac
+    displayName: Azure IaC
+    jobs:
+      - job: azure_prod_iac
+        displayName: Azure Production IaC
+        steps:
+          - task: UsePythonVersion@0
+            inputs:
+              versionSpec: "3.x"
+              addToPath: true
+          - task: Bash@3
+            name: azure_terrform_init
+            displayName: "Terraform Init and Plan"
+            condition: and(eq(variables['Build.reason'], 'PullRequest'), eq(variables['Build.reason'], 'IndividualCI'))
+            env:
+              ARM_CLIENT_ID: $(AZ_CLIENT_ID)
+              ARM_CLIENT_SECRET: $(AZ_CLIENT_SECRET)
+              ARM_SUBSCRIPTION_ID: $(AZ_SUBSCRIPRION_ID)
+              ARM_TENANT_ID: $(AZ_TENANT_ID)
+            inputs:
+              targetType: "inline"
+              workingDirectory: $(System.DefaultWorkingDirectory)/azure/environments/prod
+              script: |
+                terraform init
+                terraform plan -out=tfplan
+          - task: Bash@3
+            name: azure_terrform_apply
+            displayName: "Terraform Apply"
+            condition: eq(variables['Build.reason'], 'IndividualCI')
+            env:
+              ARM_CLIENT_ID: $(AZ_CLIENT_ID)
+              ARM_CLIENT_SECRET: $(AZ_CLIENT_SECRET)
+              ARM_SUBSCRIPTION_ID: $(AZ_SUBSCRIPRION_ID)
+              ARM_TENANT_ID: $(AZ_TENANT_ID)
+            inputs:
+              targetType: "inline"
+              workingDirectory: $(System.DefaultWorkingDirectory)/azure/environments/prod
+              script: |
+                terraform apply -input=false tfplan
